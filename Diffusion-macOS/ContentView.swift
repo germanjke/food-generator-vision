@@ -69,7 +69,7 @@ struct ContentView: View {
             // TODO: share seed too
             return ShareButtons(image: cgImage, name: prompt)
         } else {
-            let prompt = DEFAULT_PROMPT
+            let prompt = ""
             let cgImage = NSImage(imageLiteralResourceName: "placeholder").cgImage(forProposedRect: nil, context: nil, hints: nil)!
             return ShareButtons(image: cgImage, name: prompt)
         }

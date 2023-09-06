@@ -12,7 +12,7 @@ import StableDiffusion
 import CoreML
 
 let DEFAULT_MODEL = ModelInfo.v2Base
-let DEFAULT_PROMPT = "Pizza"
+//let DEFAULT_PROMPT = "Bacon"
 
 enum GenerationState {
     case startup
@@ -42,7 +42,7 @@ class GenerationContext: ObservableObject {
     }
     @Published var state: GenerationState = .startup
     
-    @Published var positivePrompt = DEFAULT_PROMPT
+    @Published var positivePrompt = ""
     @Published var negativePrompt = ""
     
     // FIXME: Double to support the slider component

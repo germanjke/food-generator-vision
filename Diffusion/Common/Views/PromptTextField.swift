@@ -18,6 +18,11 @@ struct PromptTextField: View {
     @State var isPositivePrompt: Bool = true
     @State private var tokenizer: BPETokenizer?
     @State private var currentModelVersion: String = ""
+    @State private var prompts: [String] = ["Positive prompt"]
+    @State private var promptOptions = ["Bacon", "Tomatoes", "Eggs", "Salami",
+                                        "Waterlemon", "Olives", "Pancakes"]
+    @State private var textValues: [String] = [""]
+    @State private var randomPrompts: [String] = ["Enter some food from your fridge"]
 
     @Binding var textBinding: String
     @Binding var model: String // the model version as it's stored in Settings
@@ -75,17 +80,35 @@ struct PromptTextField: View {
         self.isPositivePrompt = isPositivePrompt
         _model = .constant(model)
     }
+    
+    var randomPrompt: String {
+        return promptOptions.randomElement() ?? ""
+    }
 
     var body: some View {
         VStack {
             #if os(macOS)
-            TextField(isPositivePrompt ? "Positive prompt" : "Negative Prompt", text: $textBinding,
-                      axis: .vertical)
+            ForEach(0..<prompts.count, id: \.self) { index in
+                TextField(isPositivePrompt ? randomPrompts[index] : "You don't like to eat",
+                          text: $textValues[index], axis: .vertical)
+//                TextField(isPositivePrompt ? randomPrompt : "Negative Prompt",
+//                          text: $textValues[index], axis: .vertical)
                 .lineLimit(20)
                 .textFieldStyle(.squareBorder)
                 .listRowInsets(EdgeInsets(top: 0, leading: -20, bottom: 0, trailing: 20))
                 .foregroundColor(textColor == .green ? .primary : textColor)
                 .frame(minHeight: 30)
+                        }
+
+            Button(action: {
+                prompts.append("New Prompt") // just for updat ForEach
+                textValues.append("")
+                randomPrompts.append(self.randomPrompt)
+            }) {
+                Image(systemName: "plus.message.fill")
+                    .foregroundColor(.blue)
+                    .imageScale(.large)
+            }
             if modelInfo != nil && tokenizer != nil {
                 HStack {
                     Spacer()
