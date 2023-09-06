@@ -23,6 +23,8 @@ struct PromptTextField: View {
                                         "Waterlemon", "Olives", "Pancakes"]
     @State private var textValues: [String] = [""]
     @State private var randomPrompts: [String] = ["Enter some food from your fridge"]
+    @State private var userInputs: [String] = [""] // Массив для хранения введенных пользователем значений
+
 
     @Binding var textBinding: String
     @Binding var model: String // the model version as it's stored in Settings
@@ -84,13 +86,34 @@ struct PromptTextField: View {
     var randomPrompt: String {
         return promptOptions.randomElement() ?? ""
     }
+    
+    func updateUserInput(index: Int) {
+            if index >= 0 && index < userInputs.count {
+                userInputs[index] = textValues[index]
+            }
+        }
 
     var body: some View {
         VStack {
             #if os(macOS)
             ForEach(0..<prompts.count, id: \.self) { index in
-                TextField(isPositivePrompt ? randomPrompts[index] : "You don't like to eat",
-                          text: $textValues[index], axis: .vertical)
+                let prompt = isPositivePrompt ? randomPrompts[index] : "You don't like to eat"
+                let user_text = Binding(
+                    get: { textValues[index] },
+                    set: { newValue in
+                        textValues[index] = newValue
+                        updateUserInput(index: index)
+                        //textBinding = Binding.constant(newValue)
+                        //textBinding = newValue
+                        textBinding = userInputs.joined(separator: " ")
+                    }
+                )
+                
+                TextField(prompt, text: user_text, axis: .vertical)
+//                TextField(isPositivePrompt ? randomPrompts[index] : "You don't like to eat",
+//                          text: $textValues[index], onEditingChanged: { _ in
+//                    updateUserInput(index: index)
+//                  }, axis: .vertical)
 //                TextField(isPositivePrompt ? randomPrompt : "Negative Prompt",
 //                          text: $textValues[index], axis: .vertical)
                 .lineLimit(20)
@@ -104,6 +127,7 @@ struct PromptTextField: View {
                 prompts.append("New Prompt") // just for updat ForEach
                 textValues.append("")
                 randomPrompts.append(self.randomPrompt)
+                userInputs.append("")
             }) {
                 Image(systemName: "plus.message.fill")
                     .foregroundColor(.blue)
