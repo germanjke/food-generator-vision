@@ -34,7 +34,7 @@ struct LabelToggleDisclosureGroupStyle: DisclosureGroupStyle {
                         configuration.isExpanded.toggle()
                     }
                 }
-                Spacer()
+                //Spacer()
             }
             if configuration.isExpanded {
                 configuration.content
@@ -149,15 +149,11 @@ struct ControlsView: View {
     
     private func prompts() -> some View {
         VStack {
-            Spacer()
             PromptTextField(text: $generation.positivePrompt, isPositivePrompt: true, model: $model)
                 .padding(.top, 5)
-            Spacer()
             PromptTextField(text: $generation.negativePrompt, isPositivePrompt: false, model: $model)
                 .padding(.bottom, 5)
-            Spacer()
         }
-        .frame(maxHeight: .infinity)
     }
     
     var advancedDiffussionOptions: some View {
@@ -407,39 +403,49 @@ struct ControlsView: View {
     }
     
     var promptOptions: some View {
-            DisclosureGroup(isExpanded: $disclosedPrompt) {
-                Group {
-                    prompts()
-                }.padding(.leading, 10)
-            } label: {
+        HStack {
+            VStack(alignment: .leading) {
+//                Image(systemName: "fork.knife")
+//                    .foregroundColor(.secondary)
+//                Text("Food")
+//                    .foregroundColor(.secondary)
+//                    .font(.headline)
+//                    .fontWeight(.bold)
+    
                 HStack {
                     Label("Food", systemImage: "fork.knife").foregroundColor(.secondary)
-                    Spacer()
-                    if disclosedPrompt {
-                        Button {
-                            showPromptsHelp.toggle()
-                        } label: {
-                            Image(systemName: "info.circle")
-                        }
-                        .buttonStyle(.plain)
-                        // Or maybe use .sheet instead
-                        .popover(isPresented: $showPromptsHelp, arrowEdge: .trailing) {
-                            promptsHelp($showPromptsHelp)
-                        }
+                    Button {
+                        showPromptsHelp.toggle()
+                    } label: {
+                        Image(systemName: "info.circle")
                     }
-                }.foregroundColor(.secondary)
-                .font(.headline)
-                .fontWeight(.bold)
+                    .buttonStyle(.plain)
+                    .popover(isPresented: $showPromptsHelp, arrowEdge: .trailing) {
+                        promptsHelp($showPromptsHelp)
+                    }
+                }
+                prompts()
             }
+//            Button {
+//                showPromptsHelp.toggle()
+//            } label: {
+//                Image(systemName: "info.circle")
+//            }
+//            .buttonStyle(.plain)
+//            .popover(isPresented: $showPromptsHelp, arrowEdge: .trailing) {
+//                promptsHelp($showPromptsHelp)
+//            }
+        }
+        .padding(.leading, 10)
     }
+
     
     var body: some View {
         
-        VStack {
+        VStack(spacing: 1) {
             Button("Button1") {
                 showSwiftCode.toggle()
             }
-            
             
             promptOptions
             

@@ -3,6 +3,7 @@
 //  Diffusion-macOS
 //
 //  Created by Dolmere on 22/06/2023.
+//  Updated by German Abramov on 7/09/2023.
 //  See LICENSE at https://github.com/huggingface/swift-coreml-diffusers/LICENSE
 //
 
