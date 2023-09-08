@@ -160,17 +160,9 @@ struct ControlsView: View {
         
         ScrollView{
             
-//            Label("Advanced Diffusion Options", systemImage: "gearshape.fill")
-//                .font(.headline)
-//                .fontWeight(.bold)
             DisclosureGroup(isExpanded: $showSwiftCode) {
                 
                 VStack(alignment: .leading) {
-                    
-//                    Label("Generation Options", systemImage: "gearshape.2")
-//                        .font(.headline)
-//                        .fontWeight(.bold)
-//                    Divider()
                     
                     ScrollView {
                         Group {
@@ -210,30 +202,6 @@ struct ControlsView: View {
                                 }.foregroundColor(.secondary)
                             }
                             Divider()
-                            
-//                            DisclosureGroup(isExpanded: $disclosedPrompt) {
-//                                Group {
-//                                    prompts()
-//                                }.padding(.leading, 10)
-//                            } label: {
-//                                HStack {
-//                                    Label("Prompts", systemImage: "text.quote").foregroundColor(.secondary)
-//                                    Spacer()
-//                                    if disclosedPrompt {
-//                                        Button {
-//                                            showPromptsHelp.toggle()
-//                                        } label: {
-//                                            Image(systemName: "info.circle")
-//                                        }
-//                                        .buttonStyle(.plain)
-//                                        // Or maybe use .sheet instead
-//                                        .popover(isPresented: $showPromptsHelp, arrowEdge: .trailing) {
-//                                            promptsHelp($showPromptsHelp)
-//                                        }
-//                                    }
-//                                }.foregroundColor(.secondary)
-//                            }
-//                            Divider()
                             
                             let guidanceScaleValue = generation.guidanceScale.formatted("%.1f")
                             DisclosureGroup(isExpanded: $disclosedGuidance) {
@@ -390,14 +358,12 @@ struct ControlsView: View {
                     }
                     Divider()
                     
-                    //StatusView(pipelineState: $pipelineState)
                 }
             } label: {
                 HStack {
                     Label("Advanced Generation Settings", systemImage: "gearshape.fill").foregroundColor(.secondary)
                     Spacer()
-                }.font(.headline)
-                .fontWeight(.bold)
+                }
             }
         }
     }
@@ -405,15 +371,11 @@ struct ControlsView: View {
     var promptOptions: some View {
         HStack {
             VStack(alignment: .leading) {
-//                Image(systemName: "fork.knife")
-//                    .foregroundColor(.secondary)
-//                Text("Food")
-//                    .foregroundColor(.secondary)
-//                    .font(.headline)
-//                    .fontWeight(.bold)
     
                 HStack {
                     Label("Food", systemImage: "fork.knife").foregroundColor(.secondary)
+                    .font(.headline)
+                    .fontWeight(.bold)
                     Button {
                         showPromptsHelp.toggle()
                     } label: {
@@ -426,15 +388,7 @@ struct ControlsView: View {
                 }
                 prompts()
             }
-//            Button {
-//                showPromptsHelp.toggle()
-//            } label: {
-//                Image(systemName: "info.circle")
-//            }
-//            .buttonStyle(.plain)
-//            .popover(isPresented: $showPromptsHelp, arrowEdge: .trailing) {
-//                promptsHelp($showPromptsHelp)
-//            }
+
         }
         .padding(.leading, 10)
     }
@@ -458,6 +412,14 @@ struct ControlsView: View {
                 modelDidChange(model: ModelInfo.from(modelVersion: model) ?? ModelInfo.v2Base)
             }
         }
+        .background(
+                        LinearGradient(
+                            gradient: Gradient(colors: [Color.white, Color.mint]),
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                        .edgesIgnoringSafeArea(.all)
+                    )
     }
     
 }

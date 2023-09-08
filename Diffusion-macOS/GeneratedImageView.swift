@@ -53,5 +53,6 @@ struct GeneratedImageView: View {
         case .userCanceled:
             return AnyView(Text("Generation canceled"))
         }
+        
     }
 }
