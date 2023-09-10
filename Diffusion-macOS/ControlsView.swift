@@ -361,7 +361,29 @@ struct ControlsView: View {
                 }
             } label: {
                 HStack {
-                    Label("Advanced Generation Settings", systemImage: "gearshape.fill").foregroundColor(.secondary)
+                    //Label("Advanced Generation Settings", systemImage: "gearshape.fill").foregroundColor(.secondary)
+//                    Color.red // Цвет фона
+//                                .opacity(0.9) // Прозрачность фона
+//                                .frame(width: 400, height: 40)
+//                                .overlay(
+//                                    Label("Advanced Generation Settings", systemImage: "gearshape.fill")
+//                                        //.foregroundColor(.secondary)
+//                                )
+                    GeometryReader { geometry in
+                            HStack {
+                                Spacer()
+                                Color.blue // Цвет фона
+                                    .opacity(0.5) // Прозрачность фона
+                                    .frame(width: geometry.size.width, height: 40) // Фон будет подстраиваться по ширине окна
+                                    .overlay(
+                                        Label("Advanced Generation Settings", systemImage: "gearshape.fill")
+                                            //.foregroundColor(.secondary)
+                                            .foregroundColor(.white)
+                                    )
+                            }
+                        }
+                    .font(.headline)
+                        .fontWeight(.bold)
                     Spacer()
                 }
             }
@@ -393,8 +415,11 @@ struct ControlsView: View {
         .padding(.leading, 10)
     }
 
+
+
     
     var body: some View {
+        
         
         VStack(spacing: 1) {
             Button("Button1") {
@@ -402,6 +427,7 @@ struct ControlsView: View {
             }
             
             promptOptions
+            
             
             advancedDiffussionOptions
             
@@ -413,13 +439,13 @@ struct ControlsView: View {
             }
         }
         .background(
-                        LinearGradient(
-                            gradient: Gradient(colors: [Color.white, Color.mint]),
-                            startPoint: .topLeading,
-                            endPoint: .bottomTrailing
-                        )
-                        .edgesIgnoringSafeArea(.all)
-                    )
+            Image("burgerfridge") // Замените "your_image_name" на имя вашей изображения
+                .resizable()
+                //.aspectRatio(contentMode: .fill)
+                .edgesIgnoringSafeArea(.all)
+                //.blur(radius: 5)
+                .scaledToFill()
+            )
     }
     
 }
