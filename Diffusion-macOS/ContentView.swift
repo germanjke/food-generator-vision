@@ -57,7 +57,14 @@ struct ShareButtons: View {
             } label: {
                 Label("Save…", systemImage: "square.and.arrow.down")
             }
-        }
+        }.background(
+            LinearGradient(
+                gradient: Gradient(colors: [Color.white, Color.mint]),
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+            .edgesIgnoringSafeArea(.all)
+        )
     }
 }
 
@@ -90,11 +97,20 @@ struct ContentView: View {
 
         }
         .environmentObject(generation)
+        .background(
+                        LinearGradient(
+                            gradient: Gradient(colors: [Color.white, Color.mint]),
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                        .edgesIgnoringSafeArea(.all)
+                    )
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+        
     }
 }

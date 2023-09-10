@@ -9,7 +9,7 @@
 // Configuration settings file format documentation can be found at:
 // https://help.apple.com/xcode/#/dev745c5c974
 
-PRODUCT_NAME = Diffusers
+PRODUCT_NAME = food generator vision
 CURRENT_PROJECT_VERSION = 1.1.0
 MARKETING_VERSION = 1.1
 
