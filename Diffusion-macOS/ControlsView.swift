@@ -372,9 +372,9 @@ struct ControlsView: View {
                     GeometryReader { geometry in
                             HStack {
                                 Spacer()
-                                Color.blue // Цвет фона
-                                    .opacity(0.5) // Прозрачность фона
-                                    .frame(width: geometry.size.width, height: 40) // Фон будет подстраиваться по ширине окна
+                                //Color.white // Цвет фона
+                                    .opacity(0.1) // Прозрачность фона
+                                    .frame(width: geometry.size.width, height: geometry.size.height) // Фон будет подстраиваться по ширине окна
                                     .overlay(
                                         Label("Advanced Generation Settings", systemImage: "gearshape.fill")
                                             //.foregroundColor(.secondary)
@@ -384,8 +384,10 @@ struct ControlsView: View {
                         }
                     .font(.headline)
                         .fontWeight(.bold)
+                    
                     Spacer()
                 }
+                //.background(Color.white)
             }
         }
     }
@@ -398,11 +400,13 @@ struct ControlsView: View {
                     Label("Food", systemImage: "fork.knife").foregroundColor(.secondary)
                     .font(.headline)
                     .fontWeight(.bold)
+                    .background(Color.white)
                     Button {
                         showPromptsHelp.toggle()
                     } label: {
                         Image(systemName: "info.circle")
                     }
+                    .background(Color.white)
                     .buttonStyle(.plain)
                     .popover(isPresented: $showPromptsHelp, arrowEdge: .trailing) {
                         promptsHelp($showPromptsHelp)
@@ -439,7 +443,7 @@ struct ControlsView: View {
             }
         }
         .background(
-            Image("burgerfridge") // Замените "your_image_name" на имя вашей изображения
+            Image("cyberburger") // Замените "your_image_name" на имя вашей изображения
                 .resizable()
                 //.aspectRatio(contentMode: .fill)
                 .edgesIgnoringSafeArea(.all)

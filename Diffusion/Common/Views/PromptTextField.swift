@@ -99,6 +99,7 @@ struct PromptTextField: View {
             VStack {
                 #if os(macOS)
                 ForEach(0..<prompts.count, id: \.self) { index in
+                    let textColor: Color = .white
                     let prompt = isPositivePrompt ? randomPrompts[index] : "You don't like to eat"
                     let user_text = Binding(
                         get: { textValues[index] },
@@ -112,16 +113,12 @@ struct PromptTextField: View {
                     )
                     
                     TextField(prompt, text: user_text, axis: .vertical)
-                    //                TextField(isPositivePrompt ? randomPrompts[index] : "You don't like to eat",
-                    //                          text: $textValues[index], onEditingChanged: { _ in
-                    //                    updateUserInput(index: index)
-                    //                  }, axis: .vertical)
-                    //                TextField(isPositivePrompt ? randomPrompt : "Negative Prompt",
-                    //                          text: $textValues[index], axis: .vertical)
                         .lineLimit(20)
                         .textFieldStyle(.squareBorder)
                         .listRowInsets(EdgeInsets(top: 0, leading: -20, bottom: 0, trailing: 20))
-                        .foregroundColor(textColor == .green ? .primary : textColor)
+                        //.foregroundColor(Color.white)
+                        .background(Color.white)
+                        //.foregroundColor(textColor == .white ? .primary : textColor)
                         .frame(minHeight: 30)
                 }
                 
@@ -196,6 +193,7 @@ struct PromptTextField: View {
                         .foregroundColor(.blue)
                         .imageScale(.large)
                 }
+                .background(Color.white)
                 Button(action: {
                     // Удаляем последний элемент из массивов
                     if prompts.count > 0 {
@@ -209,6 +207,7 @@ struct PromptTextField: View {
                         .foregroundColor(.red)
                         .imageScale(.large)
                 }
+                .background(Color.white)
             }
             //.padding(.top, 20)
         }
