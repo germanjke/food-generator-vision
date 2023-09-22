@@ -293,6 +293,7 @@ struct ControlsView: View {
                                             Text("Neural Engine").tag(ComputeUnits.cpuAndNeuralEngine)
                                             Text("GPU and Neural Engine").tag(ComputeUnits.all)
                                         }.pickerStyle(.radioGroup).padding(.leading)
+                                            .background(Color.white)
                                         Spacer()
                                     }
                                     .onChange(of: generation.computeUnits) { units in
@@ -306,13 +307,16 @@ struct ControlsView: View {
                                     }
                                     .alert("Download Required", isPresented: $mustShowModelDownloadDisclaimer, actions: {
                                         Button("Cancel", role: .destructive) { resetComputeUnitsState() }
+                                            .background(Color.white)
                                         Button("Download", role: .cancel) { updateComputeUnitsState() }
+                                            .background(Color.white)
                                     }, message: {
                                         Text("This setting requires a new version of the selected model.")
                                     })
                                 } label: {
                                     HStack {
                                         Label("Advanced", systemImage: "terminal").foregroundColor(.secondary)
+                                            .background(Color.white)
                                         Spacer()
                                         if disclosedAdvanced {
                                             Button {
@@ -378,17 +382,15 @@ struct ControlsView: View {
                                     .overlay(
                                         Label("Advanced Generation Settings", systemImage: "gearshape.fill")
                                             //.foregroundColor(.secondary)
-                                            .foregroundColor(.white)
                                     )
                             }
                         }
-                    .font(.headline)
-                        .fontWeight(.bold)
                     
                     Spacer()
                 }
                 //.background(Color.white)
             }
+            .background(Color.white)
         }
     }
     
