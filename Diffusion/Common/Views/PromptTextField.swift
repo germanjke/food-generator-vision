@@ -25,6 +25,10 @@ struct PromptTextField: View {
     @State private var textValues: [String] = [""]
     @State private var randomPrompts: [String] = ["Enter some food from your fridge"]
     @State private var userInputs: [String] = [""] // Массив для хранения введенных пользователем значений
+    @State private var selectedCuisine = "Italian" // Начальное значение выбранной кухни
+    @State private var isPopoverVisible = false // Флаг видимости Popover
+
+
 
 
     @Binding var textBinding: String
@@ -98,17 +102,85 @@ struct PromptTextField: View {
         HStack {
             VStack {
                 #if os(macOS)
+//                Toggle("Positive Prompts", isOn: $isPositivePrompt)
+//                            .padding()
+
+//                        if isPositivePrompt {
+//                            // Добавляем Picker для выбора кухни только для позитивных промптов
+//                            Picker("Select Cuisine", selection: $selectedCuisine) {
+//                                Text("Italian").tag("Italian")
+//                                Text("Chinese").tag("Chinese")
+//                                Text("Mexican").tag("Mexican")
+//                                // Добавьте другие варианты кухонь, которые вам нужны
+//                            }
+//                            .pickerStyle(.segmented)
+//                            .padding()
+//                        }
+                if isPositivePrompt {
+                    Button(action: {
+                        // При нажатии на кнопку, открываем Popover
+                        isPopoverVisible.toggle()
+                    }) {
+                        Text("Select Cuisine")
+                    }
+                    .popover(isPresented: $isPopoverVisible, content: {
+                        // Здесь создаем список с вариантами кухонь
+                        VStack {
+//                            Text("Select Cuisine")
+//                                .font(.headline)
+//                                .padding()
+                            
+                            Picker("", selection: $selectedCuisine) {
+                                Text("Italian").tag("Italian")
+                                Text("Chinese").tag("Chinese")
+                                Text("Mexican").tag("Mexican")
+                                
+                            }
+                            .pickerStyle(.segmented)
+                            .padding()
+                            
+                            
+//                            Button(action: {
+//                                // При нажатии на кнопку в Popover, закрываем Popover
+//                                isPopoverVisible.toggle()
+//                            }) {
+//                                Text("Done")
+//                            }
+                            .padding()
+                        }
+                    })
+                }
+
+
+
+
+
+                
+//                Picker("Select Cuisine", selection: $selectedCuisine) {
+//                            Text("Italian").tag("Italian")
+//                            Text("Chinese").tag("Chinese")
+//                            Text("Mexican").tag("Mexican")
+//                            // Добавьте другие варианты кухонь, которые вам нужны
+//                        }
+//                        .pickerStyle(.segmented)
+//                        .padding()
+                
                 ForEach(0..<prompts.count, id: \.self) { index in
                     let textColor: Color = .white
                     let prompt = isPositivePrompt ? randomPrompts[index] : "You don't like to eat"
                     let user_text = Binding(
                         get: { textValues[index] },
+//                        set: { newValue in
+//                            textValues[index] = newValue
+//                            updateUserInput(index: index)
+//                            //textBinding = Binding.constant(newValue)
+//                            //textBinding = newValue
+//                            textBinding = userInputs.joined(separator: " ")
+//                        }
                         set: { newValue in
                             textValues[index] = newValue
                             updateUserInput(index: index)
-                            //textBinding = Binding.constant(newValue)
-                            //textBinding = newValue
-                            textBinding = userInputs.joined(separator: " ")
+                            textBinding = "\(userInputs.joined(separator: " ")) Cuisine: \(selectedCuisine)"
                         }
                     )
                     
