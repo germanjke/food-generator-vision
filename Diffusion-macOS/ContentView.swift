@@ -57,14 +57,7 @@ struct ShareButtons: View {
             } label: {
                 Label("Save…", systemImage: "square.and.arrow.down")
             }
-        }.background(
-            LinearGradient(
-                gradient: Gradient(colors: [Color.white, Color.mint]),
-                startPoint: .topLeading,
-                endPoint: .bottomTrailing
-            )
-            .edgesIgnoringSafeArea(.all)
-        )
+        }
     }
 }
 
@@ -89,22 +82,22 @@ struct ContentView: View {
         } detail: {
             GeneratedImageView()
                 .aspectRatio(contentMode: .fit)
-                .frame(width: 512, height: 512)
+                //.frame(width: 512, height: 512)
                 .cornerRadius(15)
-                .toolbar {
-                    AnyView(toolbar())
-                }
+//                .toolbar {
+//                    AnyView(toolbar())
+//                }
 
         }
         .environmentObject(generation)
-        .background(
-                        LinearGradient(
-                            gradient: Gradient(colors: [Color.white, Color.mint]),
-                            startPoint: .topLeading,
-                            endPoint: .bottomTrailing
-                        )
-                        .edgesIgnoringSafeArea(.all)
-                    )
+//        .background(
+//            Image("cyberfood") // Замените "your_image_name" на имя вашей изображения
+//                .resizable()
+//                //.aspectRatio(contentMode: .fill)
+//                .edgesIgnoringSafeArea(.all)
+//                //.blur(radius: 5)
+//                .scaledToFill()
+//            )
     }
 }
 

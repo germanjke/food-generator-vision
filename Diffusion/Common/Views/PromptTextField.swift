@@ -123,6 +123,7 @@ struct PromptTextField: View {
                     }) {
                         Text("Select Cuisine")
                     }
+                    .background(Color.white)
                     .popover(isPresented: $isPopoverVisible, content: {
                         // Здесь создаем список с вариантами кухонь
                         VStack {

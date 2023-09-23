@@ -388,7 +388,6 @@ struct ControlsView: View {
                     
                     Spacer()
                 }
-                //.background(Color.white)
             }
             .background(Color.white)
         }
@@ -428,17 +427,9 @@ struct ControlsView: View {
         
         
         VStack(spacing: 1) {
-            Button("Button1") {
-                showSwiftCode.toggle()
-            }
-            
             promptOptions
-            
-            
             advancedDiffussionOptions
-            
             StatusView(pipelineState: $pipelineState)
-             
             .padding()
             .onAppear {
                 modelDidChange(model: ModelInfo.from(modelVersion: model) ?? ModelInfo.v2Base)
