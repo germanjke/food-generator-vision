@@ -181,7 +181,7 @@ struct PromptTextField: View {
                         set: { newValue in
                             textValues[index] = newValue
                             updateUserInput(index: index)
-                            textBinding = "\(userInputs.joined(separator: " ")) Cuisine: \(selectedCuisine)"
+                            textBinding = "\(userInputs.joined(separator: " ")) dish cuisine: \(selectedCuisine) 4k"
                         }
                     )
                     
