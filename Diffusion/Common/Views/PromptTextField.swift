@@ -25,6 +25,10 @@ struct PromptTextField: View {
     @State private var textValues: [String] = [""]
     @State private var randomPrompts: [String] = ["Enter some food from your fridge"]
     @State private var userInputs: [String] = [""] // Массив для хранения введенных пользователем значений
+    @State private var selectedCuisine = "Italian" // Начальное значение выбранной кухни
+    @State private var isPopoverVisible = false // Флаг видимости Popover
+
+
 
 
     @Binding var textBinding: String
@@ -98,30 +102,96 @@ struct PromptTextField: View {
         HStack {
             VStack {
                 #if os(macOS)
+//                Toggle("Positive Prompts", isOn: $isPositivePrompt)
+//                            .padding()
+
+//                        if isPositivePrompt {
+//                            // Добавляем Picker для выбора кухни только для позитивных промптов
+//                            Picker("Select Cuisine", selection: $selectedCuisine) {
+//                                Text("Italian").tag("Italian")
+//                                Text("Chinese").tag("Chinese")
+//                                Text("Mexican").tag("Mexican")
+//                                // Добавьте другие варианты кухонь, которые вам нужны
+//                            }
+//                            .pickerStyle(.segmented)
+//                            .padding()
+//                        }
+                if isPositivePrompt {
+                    Button(action: {
+                        // При нажатии на кнопку, открываем Popover
+                        isPopoverVisible.toggle()
+                    }) {
+                        Text("Select Cuisine")
+                    }
+                    .background(Color.white)
+                    .popover(isPresented: $isPopoverVisible, content: {
+                        // Здесь создаем список с вариантами кухонь
+                        VStack {
+//                            Text("Select Cuisine")
+//                                .font(.headline)
+//                                .padding()
+                            
+                            Picker("", selection: $selectedCuisine) {
+                                Text("Italian").tag("Italian")
+                                Text("Chinese").tag("Chinese")
+                                Text("Mexican").tag("Mexican")
+                                
+                            }
+                            .pickerStyle(.segmented)
+                            .padding()
+                            
+                            
+//                            Button(action: {
+//                                // При нажатии на кнопку в Popover, закрываем Popover
+//                                isPopoverVisible.toggle()
+//                            }) {
+//                                Text("Done")
+//                            }
+                            .padding()
+                        }
+                    })
+                }
+
+
+
+
+
+                
+//                Picker("Select Cuisine", selection: $selectedCuisine) {
+//                            Text("Italian").tag("Italian")
+//                            Text("Chinese").tag("Chinese")
+//                            Text("Mexican").tag("Mexican")
+//                            // Добавьте другие варианты кухонь, которые вам нужны
+//                        }
+//                        .pickerStyle(.segmented)
+//                        .padding()
+                
                 ForEach(0..<prompts.count, id: \.self) { index in
+                    let textColor: Color = .white
                     let prompt = isPositivePrompt ? randomPrompts[index] : "You don't like to eat"
                     let user_text = Binding(
                         get: { textValues[index] },
+//                        set: { newValue in
+//                            textValues[index] = newValue
+//                            updateUserInput(index: index)
+//                            //textBinding = Binding.constant(newValue)
+//                            //textBinding = newValue
+//                            textBinding = userInputs.joined(separator: " ")
+//                        }
                         set: { newValue in
                             textValues[index] = newValue
                             updateUserInput(index: index)
-                            //textBinding = Binding.constant(newValue)
-                            //textBinding = newValue
-                            textBinding = userInputs.joined(separator: " ")
+                            textBinding = "\(userInputs.joined(separator: " ")) dish cuisine: \(selectedCuisine) 4k"
                         }
                     )
                     
                     TextField(prompt, text: user_text, axis: .vertical)
-                    //                TextField(isPositivePrompt ? randomPrompts[index] : "You don't like to eat",
-                    //                          text: $textValues[index], onEditingChanged: { _ in
-                    //                    updateUserInput(index: index)
-                    //                  }, axis: .vertical)
-                    //                TextField(isPositivePrompt ? randomPrompt : "Negative Prompt",
-                    //                          text: $textValues[index], axis: .vertical)
                         .lineLimit(20)
                         .textFieldStyle(.squareBorder)
                         .listRowInsets(EdgeInsets(top: 0, leading: -20, bottom: 0, trailing: 20))
-                        .foregroundColor(textColor == .green ? .primary : textColor)
+                        //.foregroundColor(Color.white)
+                        .background(Color.white)
+                        //.foregroundColor(textColor == .white ? .primary : textColor)
                         .frame(minHeight: 30)
                 }
                 
@@ -196,6 +266,7 @@ struct PromptTextField: View {
                         .foregroundColor(.blue)
                         .imageScale(.large)
                 }
+                .background(Color.white)
                 Button(action: {
                     // Удаляем последний элемент из массивов
                     if prompts.count > 0 {
@@ -209,6 +280,7 @@ struct PromptTextField: View {
                         .foregroundColor(.red)
                         .imageScale(.large)
                 }
+                .background(Color.white)
             }
             //.padding(.top, 20)
         }

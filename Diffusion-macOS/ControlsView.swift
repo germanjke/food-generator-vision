@@ -293,6 +293,7 @@ struct ControlsView: View {
                                             Text("Neural Engine").tag(ComputeUnits.cpuAndNeuralEngine)
                                             Text("GPU and Neural Engine").tag(ComputeUnits.all)
                                         }.pickerStyle(.radioGroup).padding(.leading)
+                                            .background(Color.white)
                                         Spacer()
                                     }
                                     .onChange(of: generation.computeUnits) { units in
@@ -306,13 +307,16 @@ struct ControlsView: View {
                                     }
                                     .alert("Download Required", isPresented: $mustShowModelDownloadDisclaimer, actions: {
                                         Button("Cancel", role: .destructive) { resetComputeUnitsState() }
+                                            .background(Color.white)
                                         Button("Download", role: .cancel) { updateComputeUnitsState() }
+                                            .background(Color.white)
                                     }, message: {
                                         Text("This setting requires a new version of the selected model.")
                                     })
                                 } label: {
                                     HStack {
                                         Label("Advanced", systemImage: "terminal").foregroundColor(.secondary)
+                                            .background(Color.white)
                                         Spacer()
                                         if disclosedAdvanced {
                                             Button {
@@ -361,10 +365,31 @@ struct ControlsView: View {
                 }
             } label: {
                 HStack {
-                    Label("Advanced Generation Settings", systemImage: "gearshape.fill").foregroundColor(.secondary)
+                    //Label("Advanced Generation Settings", systemImage: "gearshape.fill").foregroundColor(.secondary)
+//                    Color.red // Цвет фона
+//                                .opacity(0.9) // Прозрачность фона
+//                                .frame(width: 400, height: 40)
+//                                .overlay(
+//                                    Label("Advanced Generation Settings", systemImage: "gearshape.fill")
+//                                        //.foregroundColor(.secondary)
+//                                )
+                    GeometryReader { geometry in
+                            HStack {
+                                Spacer()
+                                //Color.white // Цвет фона
+                                    .opacity(0.1) // Прозрачность фона
+                                    .frame(width: geometry.size.width, height: geometry.size.height) // Фон будет подстраиваться по ширине окна
+                                    .overlay(
+                                        Label("Advanced Generation Settings", systemImage: "gearshape.fill")
+                                            //.foregroundColor(.secondary)
+                                    )
+                            }
+                        }
+                    
                     Spacer()
                 }
             }
+            .background(Color.white)
         }
     }
     
@@ -376,11 +401,13 @@ struct ControlsView: View {
                     Label("Food", systemImage: "fork.knife").foregroundColor(.secondary)
                     .font(.headline)
                     .fontWeight(.bold)
+                    .background(Color.white)
                     Button {
                         showPromptsHelp.toggle()
                     } label: {
                         Image(systemName: "info.circle")
                     }
+                    .background(Color.white)
                     .buttonStyle(.plain)
                     .popover(isPresented: $showPromptsHelp, arrowEdge: .trailing) {
                         promptsHelp($showPromptsHelp)
@@ -393,33 +420,29 @@ struct ControlsView: View {
         .padding(.leading, 10)
     }
 
+
+
     
     var body: some View {
         
+        
         VStack(spacing: 1) {
-            Button("Button1") {
-                showSwiftCode.toggle()
-            }
-            
             promptOptions
-            
             advancedDiffussionOptions
-            
             StatusView(pipelineState: $pipelineState)
-             
             .padding()
             .onAppear {
                 modelDidChange(model: ModelInfo.from(modelVersion: model) ?? ModelInfo.v2Base)
             }
         }
         .background(
-                        LinearGradient(
-                            gradient: Gradient(colors: [Color.white, Color.mint]),
-                            startPoint: .topLeading,
-                            endPoint: .bottomTrailing
-                        )
-                        .edgesIgnoringSafeArea(.all)
-                    )
+            Image("cyberburger") // Замените "your_image_name" на имя вашей изображения
+                .resizable()
+                //.aspectRatio(contentMode: .fill)
+                .edgesIgnoringSafeArea(.all)
+                //.blur(radius: 5)
+                .scaledToFill()
+            )
     }
     
 }
