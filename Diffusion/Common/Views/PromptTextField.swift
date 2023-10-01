@@ -147,9 +147,9 @@ struct PromptTextField: View {
                             textValues[index] = newValue
                             updateUserInput(index: index)
                             if selectedCuisine == "Other" {
-                                textBinding = "\(userInputs.joined(separator: " ")) dish cuisine: \(otherCuisine) 4k"
+                                textBinding = "\(userInputs.joined(separator: " ")) restaurant dish cuisine: \(otherCuisine) 4k"
                             } else {
-                                textBinding = "\(userInputs.joined(separator: " ")) dish cuisine: \(selectedCuisine) 4k"
+                                textBinding = "\(userInputs.joined(separator: " ")) restaurant dish cuisine: \(selectedCuisine) 4k"
                             }
                             //print("textBinding:", textBinding)
                         }
