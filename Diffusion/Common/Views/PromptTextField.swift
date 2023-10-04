@@ -26,6 +26,7 @@ struct PromptTextField: View {
     @State private var randomPrompts: [String] = ["Enter some food from your fridge"]
     @State private var userInputs: [String] = [""] // Массив для хранения введенных пользователем значений
     @State private var selectedCuisine = "Italian" // Начальное значение выбранной кухни
+    @State private var otherCuisine: String = ""
     @State private var isPopoverVisible = false // Флаг видимости Popover
 
 
@@ -102,20 +103,7 @@ struct PromptTextField: View {
         HStack {
             VStack {
                 #if os(macOS)
-//                Toggle("Positive Prompts", isOn: $isPositivePrompt)
-//                            .padding()
 
-//                        if isPositivePrompt {
-//                            // Добавляем Picker для выбора кухни только для позитивных промптов
-//                            Picker("Select Cuisine", selection: $selectedCuisine) {
-//                                Text("Italian").tag("Italian")
-//                                Text("Chinese").tag("Chinese")
-//                                Text("Mexican").tag("Mexican")
-//                                // Добавьте другие варианты кухонь, которые вам нужны
-//                            }
-//                            .pickerStyle(.segmented)
-//                            .padding()
-//                        }
                 if isPositivePrompt {
                     Button(action: {
                         // При нажатии на кнопку, открываем Popover
@@ -127,64 +115,46 @@ struct PromptTextField: View {
                     .popover(isPresented: $isPopoverVisible, content: {
                         // Здесь создаем список с вариантами кухонь
                         VStack {
-//                            Text("Select Cuisine")
-//                                .font(.headline)
-//                                .padding()
-                            
+
                             Picker("", selection: $selectedCuisine) {
                                 Text("Italian").tag("Italian")
                                 Text("Chinese").tag("Chinese")
                                 Text("Mexican").tag("Mexican")
+                                Text("Other").tag("Other")
                                 
                             }
                             .pickerStyle(.segmented)
-                            .padding()
+//                            .padding()
                             
-                            
-//                            Button(action: {
-//                                // При нажатии на кнопку в Popover, закрываем Popover
-//                                isPopoverVisible.toggle()
-//                            }) {
-//                                Text("Done")
-//                            }
-                            .padding()
+                            if selectedCuisine == "Other" {
+                                TextField("Other", text: $otherCuisine)
+                                    //.lineLimit(20)
+                                    .textFieldStyle(.squareBorder)
+                                    .background(Color.white)
+                                    .frame(maxWidth: 150)
+                                    .padding()
+                            }
                         }
                     })
                 }
 
-
-
-
-
-                
-//                Picker("Select Cuisine", selection: $selectedCuisine) {
-//                            Text("Italian").tag("Italian")
-//                            Text("Chinese").tag("Chinese")
-//                            Text("Mexican").tag("Mexican")
-//                            // Добавьте другие варианты кухонь, которые вам нужны
-//                        }
-//                        .pickerStyle(.segmented)
-//                        .padding()
-                
                 ForEach(0..<prompts.count, id: \.self) { index in
                     let textColor: Color = .white
                     let prompt = isPositivePrompt ? randomPrompts[index] : "You don't like to eat"
                     let user_text = Binding(
                         get: { textValues[index] },
-//                        set: { newValue in
-//                            textValues[index] = newValue
-//                            updateUserInput(index: index)
-//                            //textBinding = Binding.constant(newValue)
-//                            //textBinding = newValue
-//                            textBinding = userInputs.joined(separator: " ")
-//                        }
                         set: { newValue in
                             textValues[index] = newValue
                             updateUserInput(index: index)
-                            textBinding = "\(userInputs.joined(separator: " ")) dish cuisine: \(selectedCuisine) 4k"
+                            if selectedCuisine == "Other" {
+                                textBinding = "\(userInputs.joined(separator: " ")) restaurant dish cuisine: \(otherCuisine) 4k"
+                            } else {
+                                textBinding = "\(userInputs.joined(separator: " ")) restaurant dish cuisine: \(selectedCuisine) 4k"
+                            }
+                            //print("textBinding:", textBinding)
                         }
                     )
-                    
+                    let _ = print("INPUTS", user_text.wrappedValue)
                     TextField(prompt, text: user_text, axis: .vertical)
                         .lineLimit(20)
                         .textFieldStyle(.squareBorder)
@@ -194,30 +164,8 @@ struct PromptTextField: View {
                         //.foregroundColor(textColor == .white ? .primary : textColor)
                         .frame(minHeight: 30)
                 }
-                
-                //            Button(action: {
-                //                prompts.append("New Prompt") // just for updat ForEach
-                //                textValues.append("")
-                //                randomPrompts.append(self.randomPrompt)
-                //                userInputs.append("")
-                //            }) {
-                //                Image(systemName: "plus.message.fill")
-                //                    .foregroundColor(.blue)
-                //                    .imageScale(.large)
-                //            }
-                //            Button(action: {
-                //                        // Удаляем последний элемент из массивов
-                //                if prompts.count > 0 {
-                //                    prompts.removeLast()
-                //                    textValues.removeLast()
-                //                    randomPrompts.removeLast()
-                //                    userInputs.removeLast()
-                //                }
-                //            }) {
-                //                Image(systemName: "minus.circle.fill")
-                //                    .foregroundColor(.red)
-                //                    .imageScale(.large)
-                //            }
+  
+
                 if modelInfo != nil && tokenizer != nil {
                     HStack {
                         Spacer()
