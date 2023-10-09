@@ -10,7 +10,8 @@ Experience the simplicity of creating your own application that can perform infe
 
 1. Write down which products you have in the refrigerator
 2. Choose a cuisine
-3. Enjoy your prepared meal
+3. Discover generation settings
+4. Enjoy your prepared meal
 
 Your pictures can be generated in 4 seconds on m2 macbook air 
 
