@@ -8,6 +8,7 @@ This project builds upon the foundation of the [swift-coreml-diffusers](https://
 
 Experience the simplicity of creating your own application that can perform inference directly on your MacBook with M1/M2 processors, without the need for dedicated GPU resources. Explore the world of stable diffusion models and harness their potential within your macOS projects. Join us in shaping the future of machine learning on macOS!
 
+0. Download model weights from `Advanced Generation Settings` (only once)
 1. Write down which products you have in the refrigerator
 2. Choose a cuisine
 3. Discover generation settings
